@@ -27,7 +27,7 @@ export default function PostImageSlide({ images=[] }) {
           {images.map((i) => (
             <SwiperSlide className="w-full h-full rounded-md flex justify-center items-center" key={i}>
               <img
-                className="mx-auto h-full object-contain rounded-md"
+                className="mx-auto max-h-full object-contain rounded-md"
                 alt={i}
                 src={`${process.env.REACT_APP_API_URL}images/${i}`}
               />

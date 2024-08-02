@@ -33,7 +33,7 @@ const List = () => {
   return (
     <div className=" flex flex-col gap-3">
       {/* */}
-      {followers && <SlideHome followers={followers} />}
+      {followers && followers.length>0 ? <SlideHome followers={followers} /> :<Alert message="you dont have any followers yet" type="warning" />}
       {followersLOading && (
         <div className="w-full h-[84px] flex justify-center">
           {" "}
