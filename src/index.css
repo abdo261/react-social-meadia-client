@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 6px;
+    cursor: grabbing;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border: 1.5px solid #7e7e7e;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f1f1f1;
+    border: 2px solid #818181;
+    border-radius: 8px;
+}
+
+.active {
+    @apply text-blue-700 bg-blue-100 dark:text-white  dark:bg-slate-900 ;
+}
+div.auth{
+    background: url("../public/3386851.jpg");
+}
