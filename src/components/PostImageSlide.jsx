@@ -5,15 +5,10 @@ import "swiper/css/navigation";
 import "./styles.css";
 import { Pagination, Navigation } from "swiper/modules";
 
-
-export default function PostImageSlide({ images=[] }) {
- 
-  // images.forEach(i=>{
-    // console.log(`${process.env.REACT_APP_API_URL}/images/${i}`)
-  // })
+export default function PostImageSlide({ images = [] }) {
   return (
     <>
-      {images && images.length>0 && (
+      {images && images.length > 0 && (
         <Swiper
           pagination={{
             type: "fraction",
@@ -25,9 +20,12 @@ export default function PostImageSlide({ images=[] }) {
           grabCursor={true}
         >
           {images.map((i) => (
-            <SwiperSlide className="w-full h-full rounded-md flex justify-center items-center" key={i}>
+            <SwiperSlide
+              className="w-full h-full rounded-md flex justify-center items-center"
+              key={i}
+            >
               <img
-                className="mx-auto max-h-full object-contain rounded-md"
+                className="mx-auto max-h-full object-contain rounded-md my-auto"
                 alt={i}
                 src={`${process.env.REACT_APP_API_URL}images/${i}`}
               />

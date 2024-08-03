@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MdEmail, MdPerson } from "react-icons/md";
 import { AiFillLock } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -20,11 +20,22 @@ const Register = () => {
   const handelChange = (f, v) => setFormData((prev) => ({ ...prev, [f]: v }));
   const handelSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(formData));
+    dispatch(
+      register(formData, 
+        setFormData({
+          user_name: "",
+          email: "",
+          password: "",
+        })
+      )
+    );
   };
-  useEffect(()=>{
-    dispatch(authActions.setError(null))
-      },[])
+  const resetError = useCallback(()=>{
+    dispatch(authActions.setError(null));
+  },[dispatch])
+  useEffect(() => {
+    resetError()
+  }, [resetError]);
   return (
     <div className="auth w-screen h-screen flex flex-col md:flex-row gap-3 items-center justify-center px-3 md:px-6 lg:px-[100px] md:gap-[50px] lg:gap-[150px] ">
       <div className="flex flex-col items-center md:items-start w-full gap-3 text-white">
@@ -56,7 +67,7 @@ const Register = () => {
             errorMessage={
               getErrorsField(error, "user_name") && (
                 <ul>
-                  {getErrorsField(error, "user_name")?.map((e,i) => (
+                  {getErrorsField(error, "user_name")?.map((e, i) => (
                     <li key={i}>{e}</li>
                   ))}
                 </ul>
@@ -76,7 +87,7 @@ const Register = () => {
             errorMessage={
               getErrorsField(error, "email") && (
                 <ul>
-                  {getErrorsField(error, "email")?.map((e,i) => (
+                  {getErrorsField(error, "email")?.map((e, i) => (
                     <li key={i}>{e}</li>
                   ))}
                 </ul>
@@ -96,7 +107,7 @@ const Register = () => {
             errorMessage={
               getErrorsField(error, "password") && (
                 <ul>
-                  {getErrorsField(error, "password")?.map((e,i) => (
+                  {getErrorsField(error, "password")?.map((e, i) => (
                     <li key={i}>{e}</li>
                   ))}
                 </ul>

@@ -1,4 +1,4 @@
-import { request} from "../../utils/axios";
+import { request } from "../../utils/axios";
 import { authActions } from "../slices/authSlice";
 import { toast } from "react-toastify";
 export const register = (user, cb) => async (dispatch) => {
@@ -17,8 +17,11 @@ export const register = (user, cb) => async (dispatch) => {
       "user_info",
       JSON.stringify({ user: response.data.user, token: response.data.token })
     );
-  
+
     toast.success(response.data.message);
+    request.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${response.data.token}`;
     cb && cb();
   } catch (error) {
     dispatch(
@@ -26,8 +29,8 @@ export const register = (user, cb) => async (dispatch) => {
         error.response ? error.response.data.message : error.message
       )
     );
-    
-    toast.error(error.response ? ("error validation data") : error.message, {
+
+    toast.error(error.response ? "error validation data" : error.message, {
       autoClose: 3000,
     });
     // console.log(error)
@@ -41,19 +44,24 @@ export const login = (user, cb) => async (dispatch) => {
   dispatch(authActions.loginUser(null));
   try {
     const response = await request.post("/auth/login", user);
-   if(response.status===201) {dispatch(
-      authActions.loginUser({
-        user: response.data.user,
-        token: response.data.token,
-      })
-    );
-    localStorage.setItem(
-      "user_info",
-      JSON.stringify({ user: response.data.user, token: response.data.token })
-    );
-    
-    toast.success(response.data.message);
-    cb && cb();}
+    if (response.status === 201) {
+      dispatch(
+        authActions.loginUser({
+          user: response.data.user,
+          token: response.data.token,
+        })
+      );
+      localStorage.setItem(
+        "user_info",
+        JSON.stringify({ user: response.data.user, token: response.data.token })
+      );
+
+      toast.success(response.data.message);
+      request.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+      cb && cb();
+    }
   } catch (error) {
     dispatch(
       authActions.setError(
@@ -79,8 +87,9 @@ export const logoutUser = () => async (dispatch) => {
   try {
     dispatch(authActions.setLoading(true));
     localStorage.removeItem("user_info");
-   
+
     dispatch(authActions.logoutUser());
+    localStorage.removeItem("theme");
     toast.success("Successfully logged out");
   } catch (error) {
     dispatch(authActions.setError(error.message));
