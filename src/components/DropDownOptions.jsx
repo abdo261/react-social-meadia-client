@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dropdown,
@@ -14,25 +14,29 @@ import { CiEdit } from "react-icons/ci";
 
 import swal from "sweetalert";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { postActions } from "../redux/slices/postSlice";
+import { deletePost } from "../redux/api/posts";
 const DropDownOptions = ({ id, isCurrentUserOwner }) => {
   const [itemeDelete, setItemeDelete] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(true);
-  if (itemeDelete) {
-    swal({
-      title: "are you shure you want to delete this poste ?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((isOk) => {
-      if (isOk) {
-        console.log("delete for item number " + id);
-      } else {
-        console.log("you did note delete the iteme !!");
-      }
-      setItemeDelete(null);
-    });
-  }
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (itemeDelete) {
+      swal({
+        title: "are you shure you want to delete this poste ?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((isOk) => {
+        if (isOk) {
+          dispatch(deletePost(id))
+        } 
+        setItemeDelete(null);
+      });
+    }
+  }, [itemeDelete, dispatch, id]);
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>

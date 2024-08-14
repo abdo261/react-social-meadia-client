@@ -7,10 +7,17 @@ const postSlice = createSlice({
     post: null,
     loading: false,
     error: null,
+    errorValidation:null
   },
   reducers: {
     setPosts(state, action) {
       state.posts = action.payload;
+    },
+    addPost(state, action) {
+      state.posts = [action.payload, ...state.posts];
+    },
+    deletePost (state,action){
+     state.posts =  state.posts.filter(p=>p._id!==action.payload)
     },
     setPost(state, action) {
       state.post = action.payload;
@@ -21,8 +28,11 @@ const postSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
+    setErrorValidation(state, action) {
+      state.errorValidation = action.payload;
+    },
   },
 });
 
-export const postActions = postSlice.actions
-export const postReducer = postSlice.reducer
+export const postActions = postSlice.actions;
+export const postReducer = postSlice.reducer;

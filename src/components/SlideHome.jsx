@@ -37,7 +37,7 @@ export default function SlideHome({followers}) {
       window.removeEventListener("resize", updateSlidesPerView);
     };
   }, []);
-  const users = Array(10).fill(null);
+
   const [isFollowed, setIsFollowed] = useState(false);
 
   return (
