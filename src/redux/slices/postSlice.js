@@ -13,6 +13,9 @@ const postSlice = createSlice({
     setPosts(state, action) {
       state.posts = action.payload;
     },
+    addComment(state,action){
+      state.posts = state.posts.map(p=>(p._id ===action.payload.id ? ({...p,comments:[...p.comments,action.payload.comment]}):(p)))
+    },
     addPost(state, action) {
       state.posts = [action.payload, ...state.posts];
     },

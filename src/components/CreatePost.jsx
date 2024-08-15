@@ -81,7 +81,7 @@ const CreatePost = () => {
           }
         />
       </div>
-      <div className="w-full grid grid-cols-2 gap-2 ease-in-out transition-height ">
+      <div className="w-full grid  grid-cols-3 sm:grid-cols-2 lg:grid-cols-3  gap-2 ease-in-out transition-height ">
         {imagesFileReader.map((image, index) => (
           <motion.div
             initial={{ scale: 0.5 }}
@@ -94,7 +94,7 @@ const CreatePost = () => {
               <img
                 src={image}
                 alt={`uploaded-${index}`}
-                className="max-w-full max-h-44  rounded"
+                className="max-w-full max-h-40  rounded"
               />
               <Button
                 className="absolute right-2 top-2"

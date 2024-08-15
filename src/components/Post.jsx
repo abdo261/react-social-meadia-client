@@ -25,7 +25,7 @@ const Post = ({ post }) => {
       </div>
       <PostDescription description={post.description} />
       <PostImageSlide images={post.images} />
-      <PostFooter likes={post.likes}  comments={post.comments} />
+      <PostFooter likes={post.likes}  comments={post.comments} postId={post._id} />
     </div>
   );
 };
