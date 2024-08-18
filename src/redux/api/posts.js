@@ -3,7 +3,7 @@ import { postActions } from "../slices/postSlice";
 import { toast } from "react-toastify";
 
 export const getAllPosts = () => async (dispatch) => {
-  dispatch(postActions.setLoading(true));
+  dispatch(postActions.setLoadingList(true));
   dispatch(postActions.setPosts(null));
   dispatch(postActions.setError(null));
 
@@ -13,10 +13,10 @@ export const getAllPosts = () => async (dispatch) => {
         Authorization: `Barear ${token}`,
       },
     });
-    console.log(response);
+
     dispatch(postActions.setPosts(response.data));
   } catch (error) {
-    console.log(error);
+   
     dispatch(
       postActions.setError(
         error?.response
@@ -25,12 +25,12 @@ export const getAllPosts = () => async (dispatch) => {
       )
     );
   } finally {
-    dispatch(postActions.setLoading(false));
+    dispatch(postActions.setLoadingList(false));
   }
 };
 
 export const createPost = (post, cb) => async (dispatch) => {
-  dispatch(postActions.setLoading(true));
+  dispatch(postActions.setLoadingCreate(true));
   dispatch(postActions.setError(null));
   try {
     const formData = new FormData();
@@ -69,7 +69,7 @@ export const createPost = (post, cb) => async (dispatch) => {
       cb && cb();
     }
   } catch (error) {
-    console.log(error);
+
     if (error.response.status === 401) {
       dispatch(postActions.setErrorValidation(error.response.data.message));
       toast.error("error validation");
@@ -81,18 +81,18 @@ export const createPost = (post, cb) => async (dispatch) => {
       );
     }
   } finally {
-    dispatch(postActions.setLoading(false));
+    dispatch(postActions.setLoadingCreate(false));
   }
 };
 
 export const deletePost = (id) => async (dispatch) => {
   dispatch(postActions.setError(null));
   try {
-    const response = await request.delete(`/posts/${id}`);
+     await request.delete(`/posts/${id}`);
 
     dispatch(postActions.deletePost(id))
   } catch (error) {
-    console.log(error);
+
     dispatch(
       postActions.setError(
         error?.response

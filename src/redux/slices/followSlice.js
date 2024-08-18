@@ -5,15 +5,18 @@ const followSlice = createSlice({
     initialState:{
         followers:[],
         following:[],
-        loading:false,
+        loading:{
+            list:false,
+            create:false
+        },
         error:null
     },
 reducers:{
     setFollowers(state,action){
         state.followers = action.payload
     },
-    setLoading(state,action){
-        state.loading = action.payload
+    setLoadingList(state,action){
+        state.loading.list = action.payload
     },
     setError(state,action){
         state.error = action.payload

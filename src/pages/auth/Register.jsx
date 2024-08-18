@@ -120,7 +120,7 @@ const Register = () => {
             variant="ghost"
             textContent="Register"
             type="submit"
-            isLoading={loading}
+            isLoading={loading.register}
           />
 
           <div className="w-full flex justify-end gap-1">

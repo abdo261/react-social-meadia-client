@@ -4,7 +4,6 @@ import { CiImageOn } from "react-icons/ci";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { IoClose } from "react-icons/io5";
-import { TfiClose } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../redux/api/posts";
 import { getErrorsField } from "../utils/utils";
@@ -126,7 +125,7 @@ const CreatePost = () => {
           ref={inputFileRef}
           onChange={handelInputFileChange}
         />
-        <Button color="success" type="submit" isLoading={loading}>
+        <Button color="success" type="submit" isLoading={loading.create}>
           Post
         </Button>
       </div>

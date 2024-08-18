@@ -8,6 +8,7 @@ import { searchRoutes } from "./pages/search/routes";
 import { authRoutes } from "./pages/auth/routes";
 import { useSelector } from "react-redux";
 import NoteFoundPage from "./pages/NoteFoundPage";
+import { profileRoutes } from "./pages/profile/routes";
 
 const App = () => {
   const { user_info } = useSelector((state) => state.auth);
@@ -20,6 +21,7 @@ const App = () => {
           {messagesRoutes}
           {bookmarksRoutes}
           {searchRoutes}
+          {profileRoutes}
           <Route path="/auth/*" element={<Navigate to="/" />} />
           <Route path="*" element={<NoteFoundPage />}/>
         </>

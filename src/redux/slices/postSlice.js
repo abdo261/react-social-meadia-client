@@ -5,7 +5,10 @@ const postSlice = createSlice({
   initialState: {
     posts: [],
     post: null,
-    loading: false,
+    loading: {
+      create:false,
+      list:false
+    },
     error: null,
     errorValidation:null
   },
@@ -25,8 +28,11 @@ const postSlice = createSlice({
     setPost(state, action) {
       state.post = action.payload;
     },
-    setLoading(state, action) {
-      state.loading = action.payload;
+    setLoadingList(state, action) {
+      state.loading.list = action.payload;
+    },
+    setLoadingCreate(state, action) {
+      state.loading.create = action.payload;
     },
     setError(state, action) {
       state.error = action.payload;

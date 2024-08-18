@@ -13,14 +13,14 @@ import swal from "sweetalert";
 import { useDispatch } from "react-redux";
 
 const DropDownOptionsComment = ({ id }) => {
-  const [itemeDelete, setItemeDelete] = useState(null);
+  const [itemeToDelete, setItemeToDelete] = useState(null);
 
   const dispatch = useDispatch()
  const hendelEdite = CommentId=>{
   console.log(CommentId)
  }
   useEffect(() => {
-    if (itemeDelete) {
+    if (itemeToDelete) {
       swal({
         title: "are you shure you want to delete this comment ?",
         icon: "warning",
@@ -30,10 +30,10 @@ const DropDownOptionsComment = ({ id }) => {
         if (isOk) {
           console.log(id)
         } 
-        setItemeDelete(null);
+        setItemeToDelete(null);
       });
     }
-  }, [itemeDelete, dispatch, id]);
+  }, [itemeToDelete, dispatch, id]);
   return (
     <Dropdown placement="left-start">
       <DropdownTrigger>
@@ -61,7 +61,7 @@ const DropDownOptionsComment = ({ id }) => {
             className="text-danger"
             color="danger"
             startContent={<FaTrashAlt />}
-            onClick={() => setItemeDelete(id)}
+            onClick={() => setItemeToDelete(id)}
           >
             Delete Your Post
           </DropdownItem>

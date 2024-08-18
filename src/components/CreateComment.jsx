@@ -7,7 +7,7 @@ import { createComment } from '../redux/api/comment';
 const CreateComment = ({postId}) => {
     const [content,setContent] = useState('')
     const dispatch = useDispatch()
-    const {loading , error} = useSelector(state=>state.comment)
+    const {loading , errorValidation} = useSelector(state=>state.comment)
    const handelSubmit = e=>{
     e.preventDefault()
     dispatch(createComment(postId,{content},()=>setContent('')))
@@ -26,25 +26,25 @@ const CreateComment = ({postId}) => {
             // dispatch(postActions.setErrorValidation(null));
           }}
           value={content}
-        //   color={
-        //     getErrorsField(errorValidation, "description")
-        //       ? "danger"
-        //       : "default"
-        //   }
-        //   isInvalid={getErrorsField(errorValidation, "description")}
-        //   errorMessage={
-        //     getErrorsField(errorValidation, "description") && (
-        //       <ul>
-        //         {getErrorsField(errorValidation, "description")?.map((e, i) => (
-        //           <li key={i}>{e}</li>
-        //         ))}
-        //       </ul>
-        //     )
-        //   }
+          color={
+            getErrorsField(errorValidation, "description")
+              ? "danger"
+              : "default"
+          }
+          isInvalid={getErrorsField(errorValidation, "description")}
+          errorMessage={
+            getErrorsField(errorValidation, "description") && (
+              <ul>
+                {getErrorsField(errorValidation, "description")?.map((e, i) => (
+                  <li key={i}>{e}</li>
+                ))}
+              </ul>
+            )
+          }
         />
       </div>
       <div className='flex justify-end w-full'>
-      <Button color="success" type="submit" size='sm' isLoading={loading} >
+      <Button color="success" type="submit" size='sm' isLoading={loading.create} >
           Comment
         </Button>
       </div>

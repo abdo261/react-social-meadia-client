@@ -17,7 +17,7 @@ import swal from "sweetalert";
 const AvatarUserDropDown = () => {
   const [isLogout, setIsLogout] = useState(false);
   const { user_info } = useSelector((state) => state.auth);
-  console.log(user_info);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handelLogout = () => {

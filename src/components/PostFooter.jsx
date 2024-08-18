@@ -1,5 +1,5 @@
 import UsersLikesAvatars from "./UsersLikesAvatars";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LiaCommentSolid } from "react-icons/lia";
 import {
   Badge,
@@ -18,7 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getComments } from "../redux/api/comment";
 import { commentAction } from "../redux/slices/commentSlice";
 import CreateComment from "./CreateComment";
-import { convertTimestampToDateAndTime } from "../utils/utils";
+import {
+  convertTimestampToDateAndTime,
+  isCurrentUserOwner,
+} from "../utils/utils";
 import DropDownOptionsComment from "./DropDownOptionsComment";
 import Alert from "./Alert";
 
@@ -34,13 +37,21 @@ const PostFooter = ({ likes, comments = [], postId }) => {
   const isCurrentUserLike = likes.find(
     (l) => l.user._id === JSON.parse(localStorage.getItem("user_info")).user._id
   );
+  const getData = useCallback(() => {
+    dispatch(getComments(postId));
+  }, [dispatch,postId]);
+  const setCommentEmpty = useCallback(() => {
+    dispatch(commentAction.setComments([]));
+  }, [dispatch]);
   useEffect(() => {
     if (isOpen && comments.length > 0) {
-      dispatch(getComments(postId));
+      getData();
     } else {
-      dispatch(commentAction.setComments([]));
+      setCommentEmpty()
     }
-  }, [comments, isOpen, postId]);
+  }, [comments, isOpen, getData,setCommentEmpty]);
+  console.log(data);
+
   return (
     <div className="w-full flex items-center justify-between mt-2">
       <div className="flex items-center gap-2">
@@ -72,7 +83,7 @@ const PostFooter = ({ likes, comments = [], postId }) => {
             <ModalHeader className="text-2xl font-bold">Comments</ModalHeader>
             <ModalBody>
               <CreateComment postId={postId} />
-              {loading && (
+              {loading.list && (
                 <Spinner size="lg" label="Loading Comments.." color="primary" />
               )}
               {error && <Alert message={error} />}
@@ -107,7 +118,9 @@ const PostFooter = ({ likes, comments = [], postId }) => {
                         className="items-start"
                       />
                       <span className="absolute top-1 right-1">
-                        <DropDownOptionsComment id={c._id} />
+                        {isCurrentUserOwner(c.user._id) && (
+                          <DropDownOptionsComment id={c._id} />
+                        )}
                       </span>
                     </div>
                   ))

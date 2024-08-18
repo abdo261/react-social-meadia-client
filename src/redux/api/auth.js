@@ -2,7 +2,7 @@ import { request } from "../../utils/axios";
 import { authActions } from "../slices/authSlice";
 import { toast } from "react-toastify";
 export const register = (user, cb) => async (dispatch) => {
-  dispatch(authActions.setLoading(true));
+  dispatch(authActions.setLoadingRegister(true));
   dispatch(authActions.setError(null));
   dispatch(authActions.loginUser(null));
   try {
@@ -33,13 +33,13 @@ export const register = (user, cb) => async (dispatch) => {
     toast.error(error.response ? "error validation data" : error.message, {
       autoClose: 3000,
     });
-    // console.log(error)
+
   } finally {
-    dispatch(authActions.setLoading(false));
+    dispatch(authActions.setLoadingRegister(false));
   }
 };
 export const login = (user, cb) => async (dispatch) => {
-  dispatch(authActions.setLoading(true));
+  dispatch(authActions.setLoadingLogin(true));
   dispatch(authActions.setError(null));
   dispatch(authActions.loginUser(null));
   try {
@@ -55,9 +55,9 @@ export const login = (user, cb) => async (dispatch) => {
         "user_info",
         JSON.stringify({ user: response.data.user, token: response.data.token })
       );
-
+      
       toast.success(response.data.message);
-      request.defaults.headers.common[
+    request.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.data.token}`;
       cb && cb();
@@ -79,15 +79,13 @@ export const login = (user, cb) => async (dispatch) => {
       }
     );
   } finally {
-    dispatch(authActions.setLoading(false));
+    dispatch(authActions.setLoadingLogin(false));
   }
 };
 
 export const logoutUser = () => async (dispatch) => {
   try {
-    dispatch(authActions.setLoading(true));
     localStorage.removeItem("user_info");
-
     dispatch(authActions.logoutUser());
     localStorage.removeItem("theme");
     toast.success("Successfully logged out");
@@ -96,7 +94,5 @@ export const logoutUser = () => async (dispatch) => {
     toast.error("Error during logout: " + error.message, {
       autoClose: 3000,
     });
-  } finally {
-    dispatch(authActions.setLoading(false));
   }
 };

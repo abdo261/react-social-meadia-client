@@ -101,7 +101,7 @@ const Login = () => {
             variant="ghost"
             textContent="Login"
             type="submit"
-            isLoading={loading}
+            isLoading={loading.login}
           />
           <div className="w-full flex justify-end gap-1">
             <span>you dont have acount ?</span>{" "}

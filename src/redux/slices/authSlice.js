@@ -7,7 +7,10 @@ const authSLice = createSlice({
       ? JSON.parse(localStorage.getItem("user_info"))
       : null,
     error: null,
-    loading: false,
+    loading: {
+      register:false,
+      login:false
+    },
   },
   reducers: {
     loginUser(state, action) {
@@ -16,8 +19,11 @@ const authSLice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
-    setLoading(state, action) {
-      state.loading = action.payload;
+    setLoadingLogin(state, action) {
+      state.loading.login = action.payload;
+    },
+    setLoadingRegister(state, action) {
+      state.loading.register = action.payload;
     },
     logoutUser(state) {
       state.user_info = null;

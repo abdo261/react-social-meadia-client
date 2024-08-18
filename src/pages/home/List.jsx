@@ -34,7 +34,7 @@ const List = () => {
     <div className=" flex flex-col gap-3">
       {/* */}
       { followers && (followers.length>0 ? <SlideHome followers={followers} /> :<Alert message="you dont have any followers yet" title="No followers" type="warning" />)}
-      {followersLOading && (
+      {followersLOading.list && (
         <div className="w-full h-[84px] flex justify-center">
           {" "}
           <Spinner size="lg" label="Loading folowwers..." color="primary" />
@@ -42,7 +42,7 @@ const List = () => {
       )}
        {followersError && <Alert message={followersError} type="danger" />}
       <CreatePost />
-      {postLOading && (
+      {postLOading.list && (
         <div className="flex justify-center w-full mt-4">
           <Spinner size="lg" label="Loading Posts..." color="primary" />
         </div>
